@@ -1,6 +1,7 @@
 from mpi4py import MPI
 import Operations
 import T1, T2, T3, T4
+import timeit
 #-------------------------------
 #Паралельне програмування
 #ПКС2СП на мові Python
@@ -8,10 +9,11 @@ import T1, T2, T3, T4
 #Лазарєв Матвій ІО-91
 #12.12.21
 #-------------------------------
+start = timeit.default_timer()
 comm=MPI.COMM_WORLD
 rank = comm.Get_rank()
 size = comm.Get_size()
-N=4
+N=2400
 if rank == 0:
     print("Task", rank + 1, "start")
     c = Operations.ones_Vector(N)
@@ -149,3 +151,6 @@ if rank == 3:
     comm.send(ma4, dest=2)
     # -----Отправляет ma4 в Т3---------
     print("Task", rank + 1, "end")
+
+stop = timeit.default_timer()
+print("The total elapsed time of the program is: ", stop-start)
